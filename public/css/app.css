@@ -10002,3 +10002,11 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.jumbotron {
+  color: white;
+  background-image: url(/images/home.jpg?1f4ed4489e1dc17f235f99eece203433);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}

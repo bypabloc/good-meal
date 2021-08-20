@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
-import HelloWorld from './components/HelloWorld.vue';
+import Home from './views/Home';
 
 const app = createApp({});
-app.component('app', HelloWorld)
-    .mount('#app');
+    app.component('home', Home)
+        .mount('#app');
 
 require('./bootstrap');

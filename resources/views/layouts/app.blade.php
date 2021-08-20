@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'GoodMeal') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -15,14 +15,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-
-    <link href="{{ asset('sass/app.scss') }}" rel="stylesheet">
 </head>
 <body class="antialiased">
     <div id="app">
-        <app/>
-    </div>
+        @yield('content')
+     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
