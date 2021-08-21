@@ -19,9 +19,9 @@ class CreateSubcriptionsTable extends Migration
             $table->string('names', 255);
             $table->string('number', 255);
             $table->bigInteger('canal_marketing');
-            $table->date('birth_date');
-            $table->string('location', 255);
-            $table->string('observation', 255);
+            $table->date('birth_date')->nullable();
+            $table->string('location', 255)->nullable();
+            $table->string('observation', 255)->nullable();
             $table->timestamps();
         });
     }
