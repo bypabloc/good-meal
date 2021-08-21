@@ -21,4 +21,12 @@ class Subcription extends Model
         'location', 
         'observation', 
     ];
+
+    public function scopeByEmail($query,$email){
+        return $query->where('email',$email)->get()->first();
+    }
+
+    public function scopeExistsEmail($query,$email){
+        return $query->where('email',$email)->exists();
+    }
 }

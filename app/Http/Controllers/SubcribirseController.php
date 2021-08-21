@@ -22,12 +22,11 @@ class SubcribirseController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
-        $true_false = [true,false];
-        $random = random_int(0, 1);
+        $exists = Subcription::ExistsEmail($request->email);
 
         return [
             'data' => [
-                'exist' => $true_false[$random],
+                'exist' => $exists,
             ],
         ];
     }
