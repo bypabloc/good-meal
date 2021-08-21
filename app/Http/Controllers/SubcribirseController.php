@@ -14,12 +14,7 @@ class SubcribirseController extends Controller
     public function __construct()
     {
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    
     public function checkEmail(Request $request)
     {
 
@@ -40,6 +35,28 @@ class SubcribirseController extends Controller
         return [
             'data' => [
                 'exist' => $true_false[$random],
+            ],
+        ];
+    }
+    
+    public function new(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255',
+            'names' => 'required|max:255',
+            'number' => 'required|max:255',
+            'canal_marketing' => 'required|max:255',
+            'birth_date' => 'nullable|date_format:Y-m-d|before:today',
+            'location' => 'max:255',
+            'observation' => 'max:255',
+        ]);
+
+        $true_false = [true,false];
+        $random = random_int(0, 1);
+
+        return [
+            'data' => [
+                'exist' => true,
             ],
         ];
     }

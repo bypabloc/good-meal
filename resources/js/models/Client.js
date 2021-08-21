@@ -26,6 +26,25 @@ class Client {
         })
     };
 
+    save() {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                `subcribirse/new`,
+                {
+                    email: this.email,
+                    names: this.names,
+                    number: this.number,
+                    canal_marketing: this.canal_marketing,
+                    birth_date: this.birth_date,
+                    location: this.location,
+                    observation: this.observation,
+                },
+            )
+            .then(resolve)
+            .catch(reject)
+        })
+    };
+
     clear() {
         this.email = null;
         this.names = null;

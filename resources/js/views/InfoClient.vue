@@ -149,10 +149,26 @@
                         </div>
                     </div>
                 </div>
-
-
             </form>
-            <pre><code>{{ form }}</code></pre>
+        </template>
+        <template 
+            v-slot:actions
+            v-if="
+                (validate)
+                &&
+                (!exist)
+            "
+        >
+            <button-custom
+                @clic="newClient"
+                :classesNames="{
+                    btn: 'primary',
+                }" 
+                text="Unirse" 
+                icon="" 
+                :loading="fetchingData" 
+                :disabled="fetchingData" 
+            />
         </template>
     </modal>
 </template>
@@ -199,6 +215,55 @@ export default {
                 const { data } = snap?.data;
                 const { exist } = data;
                 console.log('exist',exist)
+
+                this.exist = exist
+            })
+            .catch(err => {
+                if(err?.response){
+                    const { response } = err
+                    const { data, status } = response
+
+                    switch (status) {
+                        case 422:
+                            const { errors, message } = data
+
+                            this.$swal({
+                                icon: 'error',
+                                title: message,
+                                html: this.ObjectErrorsToString(errors),
+                                willClose: () =>{
+                                    this.fetchingData = false
+                                },
+                            });
+
+                            break;
+                    
+                        default:
+                            this.$swal({
+                                icon: 'error',
+                                title: 'Error no controlado',
+                                willClose: () =>{
+                                    this.fetchingData = false
+                                },
+                            });
+
+                            break;
+                    }
+                }
+            });
+        },
+        newClient(){
+            this.fetchingData = true
+
+            client.save()
+            .then(snap => { 
+                console.log('snap',snap)
+                
+                this.fetchingData = false
+                this.validate = true
+
+                const { data } = snap?.data;
+                const { exist } = data;
 
                 this.exist = exist
             })

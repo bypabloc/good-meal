@@ -15,4 +15,5 @@ Route::prefix('subcribirse')->group(function () {
 
     // Route::get('/',[$controller,'index']);
     Route::post('check_email',[$controller,'checkEmail']);
+    Route::post('new',[$controller,'new']);
 });
