@@ -32,7 +32,7 @@ class SubcribirseController extends Controller
 
         return [
             'data' => [
-                'validate' => $true_false[$random],
+                'exist' => $true_false[$random],
             ],
         ];
     }

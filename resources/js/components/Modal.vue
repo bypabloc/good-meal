@@ -39,7 +39,6 @@
                     </slot>
                     <slot name="header"></slot>
                     <button
-                        v-if="closeXBtn"
                         type="button"
                         class="close"
                         :class="[
@@ -78,11 +77,6 @@
 <script>
 
 export const props = {
-    closeXBtn: {
-        type: Boolean,
-        default: true,
-        required: false,
-    },
     custom: {
         type: Object,
         default: {

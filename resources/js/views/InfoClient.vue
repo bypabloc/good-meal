@@ -7,34 +7,90 @@
             },
             size: 'full',
         }"
+        @close="reset"
     >
         <template v-slot:title>
             <h5 class="modal-title font-weight-bold">Información</h5>
         </template>
         <template v-slot:body>
             <form>
-                <div class="form-group">
-                    <label for="formGroupExampleInput">Indicanos tu correo para enviarte notificaciones que te ayudarán a mantenerte informado</label>
-                </div>
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="button-addon2" v-model="email">
-                        <div class="input-group-append">
-                            <button-custom
-                                @clic="checkEmail"
-                                :classesNames="{
-                                    btn: 'outLineSecondary',
-                                }" 
-                                text="Susbrirse" 
-                                icon="" 
-                                :loading="fetchingData" 
-                                :disabled="fetchingData" 
-                            />
+                <div
+                    v-if="
+                        (!validate)
+                        &&
+                        (!exist)
+                    "
+                >
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Indicanos tu correo para enviarte notificaciones que te ayudarán a mantenerte informado</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Correo" 
+                                aria-label="Correo" 
+                                aria-describedby="button-addon2" 
+                                v-model="form.email"
+                            >
+                            <div class="input-group-append">
+                                <button-custom
+                                    @clic="checkEmail"
+                                    :classesNames="{
+                                        btn: 'outLineSecondary',
+                                    }" 
+                                    text="Susbrirse" 
+                                    icon="" 
+                                    :loading="fetchingData" 
+                                    :disabled="fetchingData" 
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div
+                    v-if="
+                        (validate)
+                        &&
+                        (!exist)
+                    "
+                >
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">{{ form.email }}</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    v-if="
+                        (validate)
+                        &&
+                        (exist)
+                    "
+                >
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">¡Genial!</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <a class="btn btn-primary btn-lg" href="https://play.google.com/store/apps/details?id=com.goodmealspa.goodmeal&hl=es_419&gl=US" role="button" target="_blank">Descarga nuestra app</a>
+                        </div>
+                    </div>
+                </div>
+
+
             </form>
-            {{ email }}
+            <pre><code>{{ form }}</code></pre>
         </template>
     </modal>
 </template>
@@ -53,7 +109,15 @@ export default {
     data() {
         return {
             fetchingData: false,
-            email: null,
+            form: {
+                email: null,
+                names: null,
+                number: null,
+                birth_date: null,
+                location: null,
+            },
+            exist: false,
+            validate: false,
         }
     },
     components:{
@@ -67,24 +131,28 @@ export default {
             axios.post(
                 `subcribirse/check_email`,
                 {
-                    email: this.email,
+                    email: this.form.email,
                 },
             )
             .then(snap => { 
                 console.log('snap',snap)
+                
+                this.fetchingData = false
+                this.validate = true
 
-                // const  { data }  = snap?.data;
-                // const  { validate }  = data;
-                // console.log('validate',validate)
+                const  { data }  = snap?.data;
+                const  { exist }  = data;
+                console.log('exist',exist)
+
+                this.exist = exist
+
+
+
             })
             .catch(err => {
-                console.log('err',err)
                 if(err?.response){
                     const { response } = err
-                    console.log('response',response)
-
                     const { data, status } = response
-                    console.log('data',data)
 
                     switch (status) {
                         case 422:
@@ -94,20 +162,34 @@ export default {
                                 icon: 'error',
                                 title: message,
                                 html: ObjectErrorsToString(errors),
+                                willClose: () =>{
+                                    this.fetchingData = false
+                                },
                             });
 
                             break;
                     
                         default:
-                            alert('Error no controlado');
+                            this.$swal({
+                                icon: 'error',
+                                title: 'Error no controlado',
+                                willClose: () =>{
+                                    this.fetchingData = false
+                                },
+                            });
 
                             break;
                     }
                 }
-            })
-            .finally(()=>{
-                this.fetchingData = false
             });
+        },
+        reset(){
+            console.log('reset')
+            this.form = {
+                email: null,
+            };
+            this.exist = false;
+            this.validate = false;
         },
         open() {
             this.$refs.modal.open({
