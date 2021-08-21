@@ -22,6 +22,13 @@ class SubcribirseController extends Controller
      */
     public function checkEmail(Request $request)
     {
+
+        return [
+            'data' => [
+                'exist' => false,
+            ],
+        ];
+
         $validated = $request->validate([
             // 'title' => 'required|unique:posts|max:255',
             'email' => 'required|email|max:255',

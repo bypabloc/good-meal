@@ -57,16 +57,78 @@
                         (!exist)
                     "
                 >
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">{{ form.email }}</label>
-                    </div>
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <label for="formGroupExampleInput">{{ form.email }}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Nombres</label>
                         <div class="col-sm-10">
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="form.names"
                             >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Teléfono</label>
+                        <div class="col-sm-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="form.number"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">¿Donde te enteraste de nosotros?</label>
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <select class="form-control" v-model="form.info">
+                                    <option v-for="option in info_options" :value="option.value" :key="option.value">
+                                        {{ option.text }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Fecha de nacimiento</label>
+                        <div class="col-sm-10">
+                            <input
+                                type="date"
+                                class="form-control"
+                                v-model="form.birth_date"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Ubicación</label>
+                        <div class="col-sm-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="form.location"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">¿Quieres decirnos algo mas?</label>
+                        <div class="col-sm-10">
+                            <textarea
+                                class="form-control"
+                                v-model="form.observation"
+                            >
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -113,9 +175,17 @@ export default {
                 email: null,
                 names: null,
                 number: null,
+                info: null,
                 birth_date: null,
                 location: null,
+                observation: null,
             },
+            info_options: [
+                { text: 'Google', value: 1 },
+                { text: 'Facebook', value: 2 },
+                { text: 'Twitter', value: 3 },
+                { text: 'Un amigo', value: 4 },
+            ],
             exist: false,
             validate: false,
         }
