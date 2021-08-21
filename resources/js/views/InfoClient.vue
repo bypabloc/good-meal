@@ -90,8 +90,8 @@
                         <label for="staticEmail" class="col-sm-2 col-form-label">¿Donde te enteraste de nosotros?</label>
                         <div class="col-sm-10">
                             <div class="form-group">
-                                <select class="form-control" v-model="form.info">
-                                    <option v-for="option in info_options" :value="option.value" :key="option.value">
+                                <select class="form-control" v-model="form.canal_marketing">
+                                    <option v-for="option in canal_marketing" :value="option.id" :key="option.id">
                                         {{ option.text }}
                                     </option>
                                 </select>
@@ -162,7 +162,11 @@
 import Modal from '../components/Modal.vue'
 import ButtonCustom from '../components/Button.vue'
 
-import ObjectErrorsToString from '../functions/ObjectErrorsToString'
+import Client from '../models/Client'
+import CanalMarketing from '../models/CanalMarketing'
+
+const client = new Client()
+const canal_marketing = new CanalMarketing()
 
 export const props = {};
 
@@ -171,21 +175,8 @@ export default {
     data() {
         return {
             fetchingData: false,
-            form: {
-                email: null,
-                names: null,
-                number: null,
-                info: null,
-                birth_date: null,
-                location: null,
-                observation: null,
-            },
-            info_options: [
-                { text: 'Google', value: 1 },
-                { text: 'Facebook', value: 2 },
-                { text: 'Twitter', value: 3 },
-                { text: 'Un amigo', value: 4 },
-            ],
+            form: client,
+            canal_marketing: canal_marketing.findAll(),
             exist: false,
             validate: false,
         }
@@ -198,26 +189,18 @@ export default {
         checkEmail(){
             this.fetchingData = true
 
-            axios.post(
-                `subcribirse/check_email`,
-                {
-                    email: this.form.email,
-                },
-            )
+            client.checkEmail()
             .then(snap => { 
                 console.log('snap',snap)
                 
                 this.fetchingData = false
                 this.validate = true
 
-                const  { data }  = snap?.data;
-                const  { exist }  = data;
+                const { data } = snap?.data;
+                const { exist } = data;
                 console.log('exist',exist)
 
                 this.exist = exist
-
-
-
             })
             .catch(err => {
                 if(err?.response){
@@ -231,7 +214,7 @@ export default {
                             this.$swal({
                                 icon: 'error',
                                 title: message,
-                                html: ObjectErrorsToString(errors),
+                                html: this.ObjectErrorsToString(errors),
                                 willClose: () =>{
                                     this.fetchingData = false
                                 },
@@ -254,10 +237,8 @@ export default {
             });
         },
         reset(){
-            console.log('reset')
-            this.form = {
-                email: null,
-            };
+            client.clear();
+            this.form = client
             this.exist = false;
             this.validate = false;
         },
