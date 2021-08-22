@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import Home from './views/Home';
+import Admin from './views/Admin';
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -29,4 +30,5 @@ app.mixin({
     app.use(VueSweetalert2);
 
     app.component('home', Home)
+    app.component('admin', Admin)
         .mount('#app');

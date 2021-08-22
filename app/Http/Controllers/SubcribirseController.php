@@ -16,6 +16,17 @@ class SubcribirseController extends Controller
     {
     }
     
+    public function list(Request $request)
+    {
+        $subcriptions = Subcription::paginate(15);
+
+        return [
+            'data' => [
+                'list' => $subcriptions,
+            ],
+        ];
+    }
+    
     public function checkEmail(Request $request)
     {
         $validated = $request->validate([
