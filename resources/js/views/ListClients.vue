@@ -1,8 +1,49 @@
 <template>
-    asd
+    <table-custom
+        :columns="[
+            {
+                label: 'Nº',
+                field: 'id',
+            },
+            {
+                label: 'Email',
+                field: 'email',
+            },
+            {
+                label: 'Nombres',
+                field: 'names',
+            },
+            {
+                label: 'Número',
+                field: 'number',
+            },
+            {
+                label: 'Canal de marketing',
+                field: 'canal_marketing',
+            },
+            {
+                label: 'Fecha de Nacimiento',
+                field: 'birth_date',
+            },
+            {
+                label: 'Ubicación',
+                field: 'location',
+            },
+            {
+                label: 'Observación',
+                field: 'observation',
+            },
+            {
+                label: 'Fecha de registro',
+                field: 'created_at',
+            },
+        ]"
+        :list="list"
+    />
 </template>
 
 <script>
+import TableCustom from '../components/Table.vue'
 
 import Client from '../models/Client'
 import CanalMarketing from '../models/CanalMarketing'
@@ -21,6 +62,7 @@ export default {
         }
     },
     components:{
+        TableCustom,
     },
     methods: {
         getClients(){
@@ -28,13 +70,15 @@ export default {
 
             client.findAll()
             .then(snap => { 
-                console.log('snap',snap)
-                
                 this.fetchingData = false
                 this.validate = true
 
                 const { data } = snap?.data;
-                console.log('{ data }',{ data })
+                const { list } = data;
+
+                console.log('{ list }',{ list })
+                
+                if(list) this.list = list
             })
             .catch(err => {
                 if(err?.response){

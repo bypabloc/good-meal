@@ -18,7 +18,7 @@ class SubcribirseController extends Controller
     
     public function list(Request $request)
     {
-        $subcriptions = Subcription::paginate(15);
+        $subcriptions = Subcription::paginate(5);
 
         return [
             'data' => [
