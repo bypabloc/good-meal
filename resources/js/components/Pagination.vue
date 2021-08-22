@@ -1,39 +1,38 @@
 <template>
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
+    <div class="d-flex justify-content-end">
+        <ul class="pagination">
+            <li
+                v-for="item of params.links"
+                :key="item.label"
+                @click="click(item)"
+                class="page-item"
+                :class="{
+                    active: item.active,
+                    disabled: !item.url,
+                }"
+            >
+                <a class="page-link" href="#" v-html="item.label"></a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+        </ul>
+    </div>
 </template>
 
 <script>
 
 export const props = {
-    columns: {
-        type: Array,
-        required: true,
-    },
     params: {
         type: Object,
-        default: {},
+        required: true,
     },
 };
 
 export default {
-
+    emits: ['update'],
+    props,
+    methods: {
+        click(item){
+            if(item.url && !item.active) this.$emit('update',{page:item.label})
+        },
+    },
 }
 </script>
-
-<style>
-
-</style>

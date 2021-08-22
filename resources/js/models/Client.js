@@ -55,18 +55,15 @@ class Client {
         this.observation = null;
     };
  
-    findAll () {
+    findAll ( args = {} ) {
+
+        const { per_page, page, } = args
+
         return new Promise((resolve, reject) => {
             axios.get(
                 `subcribirse/list`,
                 {
-                    email: this.email,
-                    names: this.names,
-                    number: this.number,
-                    canal_marketing: this.canal_marketing,
-                    birth_date: this.birth_date,
-                    location: this.location,
-                    observation: this.observation,
+                    params: { per_page, page, },
                 },
             )
             .then(resolve)

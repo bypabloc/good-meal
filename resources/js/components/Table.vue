@@ -1,4 +1,15 @@
 <template>
+
+    <div class="row">
+        <div class="col-12 col-sm-3 col-md-2 col-lg-2">
+            <select class="custom-select" v-model="per_page_selected" @change="update({per_page:parseInt($event.target.value)})">
+                <option v-for="item in per_pages" :value="item" :key="item">
+                    {{ item }}
+                </option>
+            </select>
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -27,6 +38,7 @@
         
     <pagination
         :params="pagination"
+        @update="update"
     />
 </template>
 
@@ -61,9 +73,14 @@ export const props = {
         type: Object,
         default: {},
     },
+    per_page: {
+        type: Number,
+        default: 10,
+    },
 };
 
 export default {
+    emits: ['update'],
     props,
     components:{
         Pagination,
@@ -71,6 +88,8 @@ export default {
     data() {
         return {
             pagination: {},
+            per_pages: [5,10,25,50,100,250,500,1000],
+            per_page_selected: 5,
         }
     },
     methods: {
@@ -79,17 +98,18 @@ export default {
                 html: text,
             });
         },
+        update(values){
+            console.log('update')
+            this.$emit('update',values)
+        },
     },  
     watch: {
-        ['list']({current_page, first_page_url, from, last_page, last_page_url, links, next_page_url, path, per_page, prev_page_url, to, total}){
-            this.pagination = {current_page, first_page_url, from, last_page, last_page_url, links, next_page_url, path, per_page, prev_page_url, to, total}
-        }
+        ['list']({links}){
+            this.pagination = {links}
+        },
+    },
+    created() {
+        this.per_page_selected = this.per_page
     },
 }
 </script>
-
-<style scoped>
-    .show-read-more .more-text{
-        display: none;
-    }
-</style>

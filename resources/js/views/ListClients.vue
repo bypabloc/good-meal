@@ -39,6 +39,8 @@
             },
         ]"
         :list="list"
+        :per_page="per_page"
+        @update="getClients"
     />
 </template>
 
@@ -59,24 +61,27 @@ export default {
         return {
             fetchingData: false,
             list: [],
+            page: 1,
+            per_page: 10,
         }
     },
     components:{
         TableCustom,
     },
     methods: {
-        getClients(){
+        getClients(args = {}){
             this.fetchingData = true
 
-            client.findAll()
+            this.page = args?.page || this.page
+            this.per_page = args?.per_page || this.per_page
+
+            client.findAll({page: this.page, per_page: this.per_page, })
             .then(snap => { 
                 this.fetchingData = false
                 this.validate = true
 
                 const { data } = snap?.data;
                 const { list } = data;
-
-                console.log('{ list }',{ list })
                 
                 if(list) this.list = list
             })
@@ -117,6 +122,21 @@ export default {
     },
     mounted() {
         this.getClients()
+    },
+    created(){
+        const urlParams = new URLSearchParams(window.location.search);
+
+        console.log('urlParams',urlParams);
+
+        const page = urlParams.get('page');
+        if(page){
+            this.page = !isNaN(page) ? parseInt(page) : 5;
+        }
+        const per_page = urlParams.get('per_page');
+        if(per_page){
+            this.per_page = !isNaN(per_page) ? parseInt(per_page) : 5;
+        }
+
     },
 }
 </script>
