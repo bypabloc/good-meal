@@ -55,8 +55,20 @@ class Client {
         this.observation = null;
     };
  
-    findAll () {
-        return list.map(e => new Client(e));
+    findAll ( args = {} ) {
+
+        const { per_page, page, } = args
+
+        return new Promise((resolve, reject) => {
+            axios.get(
+                `subcribirse/list`,
+                {
+                    params: { per_page, page, },
+                },
+            )
+            .then(resolve)
+            .catch(reject)
+        })
     }
 }
 
