@@ -1,5 +1,5 @@
 <template>
-    <nav-bar-admin/>
+    <nav-bar/>
     
     <div class="container p-3 my-3 border">
         <list-clients/>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import NavBarAdmin from '../components/NavBarAdmin'
+import NavBar from '../components/NavBar'
 import ListClients from './ListClients'
 
 export default {
     components: {
-        NavBarAdmin,
+        NavBar,
         ListClients,
     },
     methods: {
@@ -21,8 +21,8 @@ export default {
             this.$refs['modal_show'].open();
         },
     },
-    mounted() {
-        
+    created() {
+        localStorage.setItem('logged',true)
     },
 }
 </script>
