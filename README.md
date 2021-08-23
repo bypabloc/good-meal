@@ -1,4 +1,4 @@
-# Twitter api with auth Laravel Sanctum
+# GoodMeal 
 
 ### Crear base de datos, ej: 
 ```
