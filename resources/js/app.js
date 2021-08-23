@@ -31,6 +31,16 @@ app.mixin({
         
             return string;
         },
+        calculateAge(age) {
+            const birth = new Date(age); // '08/08/1991' - '07/11/2003'
+            const check = new Date();
+
+            const milliDay = 1000 * 60 * 60 * 24; // a day in milliseconds;
+
+            const ageInDays = (check - birth) / milliDay;
+
+            return Math.floor(ageInDays / 365 );
+        },
     },
 })
 app.use(VueSweetalert2);

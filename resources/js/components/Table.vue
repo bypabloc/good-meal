@@ -30,6 +30,9 @@
                         <div v-else-if="column.field === 'canal_marketing'">
                             {{ canal_marketing.findById(row[column.field]).text }}
                         </div>
+                        <div v-else-if="column.field === 'birth_date'">
+                            {{ row[column.field] }} - ({{ calculateAge(row[column.field]) }} años)
+                        </div>
                         <div v-else>
                             {{ row[column.field] }}
                         </div>
