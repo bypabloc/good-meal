@@ -27,6 +27,12 @@
                                 <font-awesome-icon icon="info" />
                             </button>
                         </div>
+                        <div v-else-if="column.field === 'canal_marketing'">
+                            {{ canal_marketing.findById(row[column.field]).text }}
+                        </div>
+                        <div v-else-if="column.field === 'birth_date'">
+                            {{ row[column.field] }} - ({{ calculateAge(row[column.field]) }} años)
+                        </div>
                         <div v-else>
                             {{ row[column.field] }}
                         </div>
@@ -44,30 +50,15 @@
 
 <script>
 
+import CanalMarketing from '../models/CanalMarketing'
+const canal_marketing = new CanalMarketing()
+
 import Pagination from './Pagination.vue'
 
 export const props = {
     columns: {
         type: Array,
         required: true,
-        /**
-         * 
-            {
-                label: 'Nº',
-                field: 'n',
-                width: '1%',
-            },
-            {
-                label: 'Cliente',
-                field: 'date',
-            },
-            {
-                label: 'Acciones',
-                field: 'acciones',
-                width: '1%',
-                html: true,
-            },
-        */
     },
     list: {
         type: Object,
@@ -90,6 +81,7 @@ export default {
             pagination: {},
             per_pages: [5,10,25,50,100,250,500,1000],
             per_page_selected: 5,
+            canal_marketing,
         }
     },
     methods: {
@@ -99,7 +91,6 @@ export default {
             });
         },
         update(values){
-            console.log('update')
             this.$emit('update',values)
         },
     },  
