@@ -3,8 +3,11 @@
     
     <div class="jumbotron jumbotron-fluid jumbotron-custom">
         <div class="container container-custom">
-            <h1 class="display-4">Fluid jumbotron</h1>
-            <p>This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            <h1 class="display-4">GoodMeal</h1>
+            <p>
+                Unete ahora y salva al planeta, el cambio empieza por ti.
+                Con nuestra gran variedad de productos a bajo costo ahorrarás hasta un 66% en tus gastos de comida, 
+            </p>
             <p class="lead btn-custom">
                 <a class="btn btn-primary btn-lg" href="#" role="button" @click="info">Descarga nuestra app</a>
             </p>
