@@ -38,7 +38,7 @@ npm run install && npm run dev
 ### En la carpeta "storage/" se encuentra un archivo llamado "postman.json", este contiene las pruebas utilizadas en postman para hacer consultas y registros en la API. 
 
 
-### Decidí implementar "Arquitectura por capas" ¿por que? Porque es fácil de implementar y rapida de desarrollar para el ejercicio planteado. 
+### Decidí implementar "Arquitectura por capas" ¿po que? Porque es fácil de implementar y rapida de desarrollar para el ejercicio planteado. 
 
 
 ### En la misma carpeta esta un archivo llamado "Diagrama de clases.png"
