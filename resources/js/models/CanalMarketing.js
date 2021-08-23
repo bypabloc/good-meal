@@ -6,6 +6,14 @@ const list = [
     { id: 4, text: 'Un amigo', },
 ]
 
+const object = {
+    1: { text: 'Google', },
+    2: { text: 'Facebook', },
+    3: { text: 'Twitter', },
+    4: { text: 'Un amigo', },
+    404: { text: 'No encontrado', },
+}
+
 class CanalMarketing {
     
     constructor( args = {} ) {
@@ -16,8 +24,8 @@ class CanalMarketing {
         return list.map(e => new CanalMarketing(e));
     }
  
-    toString () {
-        return 'Public method toString has been called.';
+    findById (id) {
+        return object[id] || object[404];
     }
 }
 

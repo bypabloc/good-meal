@@ -48,10 +48,8 @@
 import TableCustom from '../components/Table.vue'
 
 import Client from '../models/Client'
-import CanalMarketing from '../models/CanalMarketing'
 
 const client = new Client()
-const canal_marketing = new CanalMarketing()
 
 export const props = {};
 
@@ -125,8 +123,6 @@ export default {
     },
     created(){
         const urlParams = new URLSearchParams(window.location.search);
-
-        console.log('urlParams',urlParams);
 
         const page = urlParams.get('page');
         if(page){
