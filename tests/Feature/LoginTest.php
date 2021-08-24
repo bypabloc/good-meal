@@ -23,20 +23,8 @@ class LoginTest extends TestCase
     /** @test */
     public function authenticated_to_a_user()
     {
-        DB::beginTransaction();
-
-        $data = [
-            'name' => 'Pablo Contreras',
-            "email" => "pacg1991@gmail.com",
-            "password" => "12345678",
-        ];
-
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'email_verified_at' => now(),
-        ]);
+        $data = User::factory()->create();
+        $data['password'] = 'password';
 
         $this->get('/login');
         $credentials = [
@@ -45,37 +33,21 @@ class LoginTest extends TestCase
         ];
         $response = $this->post('/login', $credentials);
         $this->assertCredentials($credentials);
-
-        DB::rollback();
     }
 
     /** @test */
     public function not_authenticate_to_a_user_with_credentials_invalid()
     {
-        DB::beginTransaction();
-
-        $data = [
-            'name' => 'Pablo Contreras',
-            "email" => "pacg1991@gmail.com",
-            "password" => "12345678",
-        ];
-
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'email_verified_at' => now(),
-        ]);
+        $data = User::factory()->create();
+        $data['password'] = 'password1';
 
         $this->get('/login');
         $credentials = [
             'email' => $data['email'],
-            "password" => "123456789",
+            "password" => $data['password'],
         ];
         $response = $this->post('/login', $credentials);
         $this->assertInvalidCredentials($credentials);
-
-        DB::rollback();
     }
 
     /** @test */
