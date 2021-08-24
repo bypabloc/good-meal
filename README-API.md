@@ -1,6 +1,6 @@
 # Instrucciones de uso de la API
 
-### El siguiente archivo contiene un archivo json, el cual tiene las pruebas utilizadas en postman para hacer consultas y registros en la API [readme API](https://github.com/bypabloc/good-meal/blob/main/storage/postman.json) 
+### El siguiente archivo contiene un archivo json, el cual tiene las pruebas utilizadas en postman para hacer consultas y registros en la API [postman.json](https://github.com/bypabloc/good-meal/blob/main/storage/postman.json) 
 
 ### Para la api estan disponibles las siguientes rutas: 
 - POST /api/v1/login
@@ -8,11 +8,11 @@
 - GET  /api/v1/subcribirse/list (token requerido)
 - GET  /api/v1//logout (token requerido)
 
-### Para la ruta "login" espera 2 pasametros:
+### Para la ruta "login" espera 2 parámetros:
 - email (string)
 - password (string)
 
-### Para la ruta "register" espera 4 pasametros:
+### Para la ruta "register" espera 4 parámetros:
 - name (string)
 - email (string)
 - password (string)
